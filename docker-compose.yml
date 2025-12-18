@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  qron-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3090:3090"
+    command: npm run start:dev
+    volumes:
+      - type: bind
+        source: ./src/
+        target: /app/src/
+      - type: bind
+        source: ./package.json
+        target: /app/package.json
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - redis
+    networks:
+      - cron-network
+
+  redis:
+    image: redis:6-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - cron-network
+
+networks:
+  cron-network:
+    driver: bridge
