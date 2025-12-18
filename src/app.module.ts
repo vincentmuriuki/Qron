@@ -3,6 +3,9 @@ import { BullModule } from '@nestjs/bull';
 import { HttpModule } from '@nestjs/axios';
 import { ScheduleController } from './scheduler/scheduler.controller';
 import { ScheduleProcessor } from './scheduler/schedule.processor';
+import { BullBoardModule } from '@bull-board/nestjs';
+import { ExpressAdapter } from '@bull-board/express';
+import { BullAdapter } from '@bull-board/api/bullAdapter';
 
 @Module({
   imports: [
@@ -14,6 +17,16 @@ import { ScheduleProcessor } from './scheduler/schedule.processor';
     }),
     BullModule.registerQueue({
       name: 'webhook-queue'
+    }),
+
+    BullBoardModule.forRoot({
+      route: '/admin/queues',
+      adapter: ExpressAdapter
+    }),
+
+    BullBoardModule.forFeature({
+      name: 'webhook-queue',
+      adapter: BullAdapter
     }),
     HttpModule
   ],

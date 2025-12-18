@@ -21,7 +21,7 @@ export class ScheduleProcessor {
             url: url
         }
 
-        if(method.toLowercase() === 'get') {
+        if(method.toLowerCase() === 'get') {
             axiosConfig.params = payload;
         } else {
             axiosConfig.data = payload;

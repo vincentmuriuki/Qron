@@ -9,7 +9,6 @@ export class ScheduleController {
 
     @Post()
     async scheduleWebhook(@Body() body: CreateScheduleDto) {
-        console.log('Received schedule request:', body);
         const job = await this.webhookQueue.add('fire-webhook',
             {
                 url: body.targetUrl,
