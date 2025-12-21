@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, OnModuleInit } from "@nestjs/common";
-import { PrismaService } from "./prisma.service";
+import { PrismaService } from "@app/prisma.service";
 import { Redis } from 'ioredis';
 import { Cron } from "@nestjs/schedule";
 
@@ -18,9 +18,9 @@ export class ApiKeySyncService implements OnModuleInit {
         await this.syncToRedis()
     }
 
-    @Cron('*/30 * * * * *')
+    @Cron('*/30 * * * *')
     async handleCron() {
-        this.logger.debug('30s interval sync!')
+        this.logger.debug('30 mins interval sync!')
         await this.syncToRedis()
     }
 
