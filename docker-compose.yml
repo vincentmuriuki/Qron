@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3090:3090"
+      - '3090:3090'
     command: npm run start:dev
     volumes:
       - type: bind
@@ -18,16 +18,19 @@ services:
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      DATABASE_URL: DATABASE_URL="postgres://qron_user:password@db::5430"
+      DATABASE_URL: postgres://qron_usr:password@db:5432/qron-db
+      API_KEY: qron_demo_BWyqXQoUFD3JyF9z5pY7UTPFzZH6dJey
     depends_on:
       - redis
     networks:
       - cron-network
+    # env_file:
+    #   - .env
 
   redis:
     image: redis:6-alpine
     ports:
-      - "6379:6379"
+      - '6379:6379'
     networks:
       - cron-network
 
